@@ -1,4 +1,4 @@
-name: Build Godot APK from ZIP
+name: ساخت APK از پروژه Godot
 
 on:
   push:
@@ -10,27 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Unzip Project
-      run: |
-        mkdir godot_project
-        unzip into-the-fog-1.---.zip -d godot_project
+      - name: Unzip the project
+        run: |
+          mkdir godot_project
+          unzip into-the-fog-1.---zip -d godot_project
 
-    - name: Setup Godot
-      uses: firebelley/godot-ci@v2
-      with:
-        godot-version: '3.5.1'  # نسخه پروژه خودت را وارد کن
-        export-template: true
+      - name: Export Godot APK
+        uses: firebelley/godot-export@v6.0.0
+        with:
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
+          relative_project_path: godot_project
+          presets_to_export: Android
 
-    - name: Export APK
-      run: |
-        mkdir -p build
-        godot --headless --path godot_project --export "Android" build/Into The Fog 1.apk
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
-      with:
-        name: MyGame-APK
-        path: build/MyGame.apk
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Godot-APK
+          path: godot_project/Into The Fog 1.apk
