@@ -16,7 +16,7 @@ jobs:
       - name: Unzip the project
         run: |
           mkdir godot_project
-          unzip into-the-fog-1.---zip -d godot_project
+          unzip "into-the-fog-1.---.zip" -d godot_project
 
       - name: Export Godot APK
         uses: firebelley/godot-export@v6.0.0
@@ -29,5 +29,5 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Godot-APK
-          path: godot_project/Into The Fog 1.apk
+          name: Into-the-fog-1-APK
+          path: godot_project/Into\ the\ fog\ 1.apk
